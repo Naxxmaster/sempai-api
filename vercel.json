@@ -1,13 +1,9 @@
 {
-  "name": "sempai-api",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "version": 2,
+  "functions": {
+    "api/chat.js": {
+      "memory": 512,
+      "maxDuration": 30
+    }
+  }
 }
