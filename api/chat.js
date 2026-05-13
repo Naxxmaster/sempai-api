@@ -10,7 +10,7 @@ module.exports = async function handler(req, res) {
     const { messages, system, hasImage } = req.body;
 
     const model = hasImage
-      ? 'claude-sonnet-4-20250514'
+      ? 'claude-sonnet-4-5-20251001'
       : 'claude-haiku-4-5-20251001';
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
