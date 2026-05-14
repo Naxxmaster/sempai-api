@@ -12,11 +12,25 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { messages, system, hasImage } = req.body;
+    const { messages, system, hasImage, needsLegalSearch } = req.body;
 
     const model = hasImage
       ? 'claude-sonnet-4-6'
       : 'claude-haiku-4-5-20251001';
+
+    const requestBody = {
+      model,
+      max_tokens: 800,
+      temperature: 1.0,
+      system,
+      messages,
+    };
+
+    if (needsLegalSearch) {
+      requestBody.tools = [
+        { type: 'web_search_20250305', name: 'web_search' }
+      ];
+    }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -25,13 +39,7 @@ module.exports = async function handler(req, res) {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify({
-        model,
-        max_tokens: 600,
-        temperature: 1.0,
-        system,
-        messages,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     const data = await response.json();
